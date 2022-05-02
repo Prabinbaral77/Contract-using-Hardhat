@@ -1,5 +1,6 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.5.0 <0.9.0;
+import "hardhat/console.sol";
 
 contract Token {
     string public name="Hardhat Token";
@@ -15,12 +16,15 @@ contract Token {
     }
 
     function transferToken(address to, uint amount) external {
+        console.log("**sender balance is %s token**", balances[msg.sender]);
+        console.log("**sender is sending %s token to %s address**", amount, to);
+
         require(balances[msg.sender] >= amount, "Not sufficent token for transfer");
         balances[msg.sender] -= amount;
         balances[to] += amount;
     }
 
-    function checkBalance(address account) public view returns(uint) {
+    function balanceOf(address account) external view returns(uint) {
         return balances[account];
     }
 }
